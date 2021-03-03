@@ -3,14 +3,14 @@
 CMD=`realpath $0`
 COMMON_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $COMMON_DIR/../../..)
-ARM64_CROSS_COMPILE=/usr/bin/aarch64-linux-gnu-
+ARM64_CROSS_COMPILE=$TOP_DIR/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
 
 function build_uboot()
 {
 	echo "============Start build kernel============"
-	echo "TARGET_ARCH          =$NXP_ARCH"
-	echo "TARGET_UBOOT_CONFIG =$NXP_UBOOT_DEFCONFIG"
+	echo "TARGET_ARCH         = $NXP_ARCH"
+	echo "TARGET_UBOOT_CONFIG = $NXP_UBOOT_DEFCONFIG"
 	echo "=========================================="
 	export ARCH=$NXP_ARCH
 	export CROSS_COMPILE=$ARM64_CROSS_COMPILE

@@ -3,7 +3,7 @@
 CMD=`realpath $0`
 COMMON_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $COMMON_DIR/../../..)
-ARM64_CROSS_COMPILE=/usr/bin/aarch64-linux-gnu-
+ARM64_CROSS_COMPILE=$TOP_DIR/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 
 # Boot image
 # Boot partition volume id
@@ -19,8 +19,8 @@ IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
 
 function build_kernel(){
 	echo "============Start build kernel============"
-	echo "TARGET_ARCH          =$NXP_ARCH"
-	echo "TARGET_KERNEL_CONFIG =$NXP_KERNEL_DEFCONFIG"
+	echo "TARGET_ARCH          = $NXP_ARCH"
+	echo "TARGET_KERNEL_CONFIG = $NXP_KERNEL_DEFCONFIG"
 	echo "=========================================="
 	cd $TOP_DIR/linux-imx
 	export ARCH=$NXP_ARCH

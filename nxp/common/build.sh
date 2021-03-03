@@ -77,25 +77,29 @@ else
 	VERSION_NUMBER="$VERSION_NUMBER"_"$(date  +%Y%m%d%H%M_%Z)"
 fi
 echo "VERSION_NUMBER: $VERSION_NUMBER"
-
-echo "	1. IMX8MP-IM-A"
-echo "	2. PE100A"
-echo "	3. PV100A"
-echo "	4. IMX8MQ_EVK"
+echo ""
+echo "1. IMX8MP-IM-A"
+echo "2. PE100A"
+echo "3. PV100A"
+echo "4. IMX8MQ_EVK"
 read -p "Select build product: " TARGET_PRODUCT
 if [ ! $TARGET_PRODUCT ]; then
     TARGET_PRODUCT="1"
 fi
 
-echo "	1. All Image"
-echo "	2. U-boot Image"
-echo "	3. Kernel Image"
-echo "	4. Rootfs Image"
-echo "	5. Cleanall"
+echo ""
+echo "1. All Image"
+echo "2. U-boot Image"
+echo "3. Kernel Image"
+echo "4. Rootfs Image"
+echo "5. RAW Image"
+echo "6. Cleanall"
 read -p "Select build type: " BUILD
 if [ ! $BUILD ]; then
     BUILD="1"
 fi
+
+echo ""
 
 case $TARGET_PRODUCT in
 1) TARGET_PRODUCT=imx8mq-im-a
@@ -110,8 +114,6 @@ esac
 
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/BoardConfig_debian.mk
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/Partition.mk
-source $TOP_DIR/device/nxp/common/Version.mk
-
 
 case $BUILD in
 1)	# all image
@@ -126,7 +128,10 @@ case $BUILD in
 4)	# rootfs
 	build_debian
 	;;
-5)	# cleanall
+5)	# raw
+	build_image
+	;;
+6)	# cleanall
 	build_cleanall
 	;;
 *)	echo "Wrong parameter"
