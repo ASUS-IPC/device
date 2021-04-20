@@ -34,10 +34,10 @@ function build_kernel(){
 		exit 1
 	fi
 
-	rm -rf $TOP_DIR/debian/packages/linux-imx/
+	rm -rf $TOP_DIR/debian/packages/${NXP_SOC}/linux-imx/
 	
 	make ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE modules -j$NXP_JOBS
-	make ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE modules_install INSTALL_MOD_PATH=$TOP_DIR/debian/packages/linux-imx/modules
+	make ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE modules_install INSTALL_MOD_PATH=$TOP_DIR/debian/packages/${NXP_SOC}/linux-imx/modules
 	if [ $? -eq 0 ]; then
 		echo "====Build kernel modules ok!===="
 	else
@@ -50,7 +50,7 @@ function build_qca_driver() {
 	echo "============Start build qcacld-2.0 wifi driver============"
 	NXP_KERNEL_SRC=$TOP_DIR/linux-imx
 
-	cd $TOP_DIR/debian/packages/qcacld-2.0-imx
+	cd $TOP_DIR/debian/packages/${NXP_SOC}/qcacld-2.0-imx
 
 	CONFIG_CFG80211_INTERNAL_REGDB=y \
 	CONFIG_HDD_WLAN_WAIT_TIME=10000 \
@@ -65,7 +65,7 @@ function build_qca_driver() {
 	MODNAME=qca6174 \
 	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC make -j$NXP_JOBS
 
-	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC INSTALL_MOD_PATH=$TOP_DIR/debian/packages/linux-imx/modules make modules_install
+	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC INSTALL_MOD_PATH=$TOP_DIR/debian/packages/${NXP_SOC}/linux-imx/modules make modules_install
 	if [ $? -eq 0 ]; then
 		echo "====Build qca drivr ok!===="
 		make clean

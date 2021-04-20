@@ -60,7 +60,7 @@ function build_cleanall(){
 	cd $TOP_DIR/imx-atf && make distclean && cd -
 	cd $TOP_DIR/imx-mkimage && make clean && cd -
 	cd $TOP_DIR/linux-imx && make distclean && cd -
-	cd $TOP_DIR/debian/packages/qcacld-2.0-imx && make clean && cd -
+	cd $TOP_DIR/debian/packages/${NXP_SOC}/qcacld-2.0-imx && make clean && cd -
 	sudo rm -rf $TOP_DIR/debian/binary
 }
 
