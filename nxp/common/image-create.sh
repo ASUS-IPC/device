@@ -4,9 +4,6 @@ CMD=`realpath $0`
 COMMON_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $COMMON_DIR/../../..)
 
-TARGET_PRODUCT=imx8mq-im-a
-NXP_HOSTNAME=IMX8P-IM-A
-
 # Partition table 
 # size@offset(layout) [in KiB]
 #partition_layout="65536@8192(boot),8192@73728(misc),4194304@81920(rootfs)"
@@ -31,7 +28,7 @@ echo partition_layout=$partition_layout
 IMX_BOOT_SEEK=33
 UBOOT="flash.bin"
 
-IMAGES=$TOP_DIR/Image-${TARGET_PRODUCT}-debian
+IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
 SDBOOTIMG="${IMAGES}/${NXP_HOSTNAME}-debian-raw.img"
 
 [ ! -d ${IMAGES} ] && mkdir ${IMAGES}

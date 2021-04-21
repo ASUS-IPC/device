@@ -68,8 +68,10 @@ function build_qca_driver() {
 	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC INSTALL_MOD_PATH=$TOP_DIR/debian/packages/linux-imx/modules make modules_install
 	if [ $? -eq 0 ]; then
 		echo "====Build qca drivr ok!===="
+		make clean
 	else
 		echo "====Build qca driver failed!===="
+		make clean
 		exit 1
 	fi
 }
