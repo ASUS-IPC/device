@@ -46,36 +46,6 @@ function build_kernel(){
 	fi
 }
 
-function build_qca_driver() {
-	echo "============Start build qcacld-2.0 wifi driver============"
-	NXP_KERNEL_SRC=$TOP_DIR/linux-imx
-
-	cd $TOP_DIR/debian/packages/${NXP_SOC}/qcacld-2.0-imx
-
-	CONFIG_CFG80211_INTERNAL_REGDB=y \
-	CONFIG_HDD_WLAN_WAIT_TIME=10000 \
-	CONFIG_LINUX_QCMBR=y \
-	CONFIG_NON_QC_PLATFORM=y \
-	CONFIG_PMF_SUPPORT=y \
-	TARGET_BUILD_VARIANT=user \
-	CONFIG_ROME_IF=pci \
-	CONFIG_WLAN_FEATURE_11W=y \
-	CONFIG_WLAN_FEATURE_FILS=y \
-	CONFIG_WLAN_WAPI_MODE_11AC_DISABLE=y \
-	MODNAME=qca6174 \
-	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC make -j$NXP_JOBS
-
-	ARCH=$NXP_ARCH CROSS_COMPILE=$ARM64_CROSS_COMPILE KERNEL_SRC=$NXP_KERNEL_SRC INSTALL_MOD_PATH=$TOP_DIR/debian/packages/${NXP_SOC}/linux-imx/modules make modules_install
-	if [ $? -eq 0 ]; then
-		echo "====Build qca drivr ok!===="
-		make clean
-	else
-		echo "====Build qca driver failed!===="
-		make clean
-		exit 1
-	fi
-}
-
 # Generate the boot image with the boot scripts and required Device Tree files
 function create_boot() {
 	if [ $(expr $BOOT_SPACE / 1024) -gt 512 ]; then
@@ -120,5 +90,4 @@ function create_boot() {
 }
 echo $BOOTDD_VOLUME_ID
 build_kernel
-build_qca_driver
 create_boot
