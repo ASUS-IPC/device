@@ -13,7 +13,7 @@ KERNEL_BIN="Image"
 KERNEL_DTB=`ls $TOP_DIR/linux-imx/arch/arm64/boot/dts/freescale | grep "fsl-imx8mq" | grep dtb`
 IMX_M4_DEMOS="$TOP_DIR/device/nxp/common/${NXP_SOC}/imx-m4-demos"
 
-IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
+#IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
 [ ! -d ${IMAGES} ] && mkdir ${IMAGES}
 
 

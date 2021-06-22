@@ -28,8 +28,8 @@ echo partition_layout=$partition_layout
 IMX_BOOT_SEEK=33
 UBOOT="flash.bin"
 
-IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
-SDBOOTIMG="${IMAGES}/${NXP_HOSTNAME}-debian-raw.img"
+#IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
+SDBOOTIMG="${IMAGES}/${NXP_HOSTNAME}-${OS}-raw.img"
 
 [ ! -d ${IMAGES} ] && mkdir ${IMAGES}
 

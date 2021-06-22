@@ -4,7 +4,7 @@ CMD=`realpath $0`
 COMMON_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $COMMON_DIR/../../..)
 ARM64_CROSS_COMPILE=$TOP_DIR/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
-IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
+#IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
 [ ! -d ${IMAGES} ] && mkdir ${IMAGES}
 
 function build_uboot()

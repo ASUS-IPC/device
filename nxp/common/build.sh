@@ -6,16 +6,16 @@ TOP_DIR=$(realpath $COMMON_DIR/../../..)
 
 function build_uboot(){
 	cd $COMMON_DIR
-        ./mk-uboot.sh
+        IMAGES=$IMAGES ./mk-uboot.sh
 }
 
 function build_kernel(){
 	cd $COMMON_DIR
-	./mk-kernel.sh
+	IMAGES=$IMAGES ./mk-kernel.sh
 }
 
 function build_debian(){
-	ROOTFS_IMG=$TOP_DIR/Image-${TARGET_PRODUCT}-debian//rootfs.img
+	ROOTFS_IMG=$TOP_DIR/$IMAGES/rootfs.img
 	rm -f $ROOTFS_IMG
 
 	cd $TOP_DIR/debian
@@ -26,7 +26,7 @@ function build_debian(){
 
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ./mk-rootfs-buster.sh
 
-	./mk-image.sh
+	IMAGES=$IMAGES ./mk-image.sh
 	cd ..
 	if [ $? -eq 0 ]; then
 		echo "====Build Debian ok!===="
@@ -34,23 +34,51 @@ function build_debian(){
 		echo "====Build Debian failed!===="
 		exit 1
 	fi
+}
 
-	[ -z "$ROOTFS_IMG" ] && return
+function build_ubuntu()
+{
+	ROOTFS_IMG=$TOP_DIR/$IMAGES/rootfs.img
+	rm -f $ROOTFS_IMG
 
-	if [ ! -f "$ROOTFS_IMG" ]; then
-		echo "$ROOTFS_IMG not generated?"
+	cd $TOP_DIR/debian
+	if [ ! -e ubuntu-*.tar.gz ]; then
+		echo -e "\033[36m Run mk-base-ubuntu.sh first \033[0m"
+		RELEASE="18.04" ARCH=$NXP_ARCH ./mk-base-ubuntu.sh
 	fi
+
+	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ./mk-rootfs-ubuntu.sh
+
+	IMAGES=$IMAGES ./mk-image.sh
+	cd ..
+	if [ $? -eq 0 ]; then
+		echo "====Build Ubuntu ok!===="
+	else
+		echo "====Build Ubuntu failed!===="
+		exit 1
+	fi
+}
+
+function build_rootfs(){
+	case "${OS:-debian}" in
+		debian)
+			build_debian
+			;;
+		ubuntu)
+			build_ubuntu
+			;;
+	esac
 }
 
 function build_image(){
 	cd $COMMON_DIR
-	./image-create.sh
+	OS=${OS:-debian} IMAGES=$IMAGES ./image-create.sh
 }
 
 function build_all(){
 	build_uboot
 	build_kernel
-	build_debian
+	build_rootfs
 	build_image
 }
 
@@ -116,6 +144,8 @@ esac
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/BoardConfig_debian.mk
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/Partition.mk
 
+IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}
+
 case $BUILD in
 1)	# all image
 	build_all
@@ -127,7 +157,7 @@ case $BUILD in
 	build_kernel
 	;;
 4)	# rootfs
-	build_debian
+	build_rootfs
 	;;
 5)	# raw
 	build_image
