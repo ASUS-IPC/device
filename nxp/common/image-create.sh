@@ -106,6 +106,12 @@ function downloadImages
 	done
 
 	sync && sync
+
+	cd ${IMAGES}
+	zip -1 ${NXP_HOSTNAME}-${OS}-raw.img.zip ${NXP_HOSTNAME}-${OS}-raw.img
+	zip -1 rootfs.img.zip rootfs.img
+	rm ${NXP_HOSTNAME}-${OS}-raw.img
+	rm rootfs.img
 }
  
 parse_parameter $partition_layout
