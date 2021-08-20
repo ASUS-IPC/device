@@ -10,7 +10,6 @@ ARM64_CROSS_COMPILE=$TOP_DIR/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-20
 BOOTDD_VOLUME_ID="Boot ${NXP_HOSTNAME}"
 KERNEL="$TOP_DIR/linux-imx/arch/arm64/boot"
 KERNEL_BIN="Image"
-KERNEL_DTB=`ls $TOP_DIR/linux-imx/arch/arm64/boot/dts/freescale | grep "fsl-imx8mq" | grep dtb`
 IMX_M4_DEMOS="$TOP_DIR/device/nxp/common/${NXP_SOC}/imx-m4-demos"
 
 #IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-debian
@@ -60,6 +59,7 @@ function create_boot() {
 	mcopy -i ${IMAGES}/boot.img -s ${KERNEL}/${KERNEL_BIN} ::Image
 
 	# Copy device tree file
+	KERNEL_DTB=`ls $TOP_DIR/linux-imx/arch/arm64/boot/dts/freescale | grep "fsl-imx8mq" | grep dtb`
 	for DTB in ${KERNEL_DTB}; do
 		echo mcopy -i ${IMAGES}/boot.img -s ${KERNEL}/dts/freescale/${DTB} ::${DTB}
 		mcopy -i ${IMAGES}/boot.img -s ${KERNEL}/dts/freescale/${DTB} ::${DTB}
