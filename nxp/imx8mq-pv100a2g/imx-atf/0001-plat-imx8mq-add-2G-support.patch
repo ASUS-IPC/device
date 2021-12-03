@@ -1,0 +1,54 @@
+From 7659d7885ea9646880c5dead9184a83ca1a58e23 Mon Sep 17 00:00:00 2001
+From: andy3_kuo <andy3_kuo@asus.com>
+Date: Mon, 5 Jul 2021 15:54:19 +0800
+Subject: [PATCH] plat: imx8mq: add 2G support
+
+Change-Id: Idcf6b797750e8f664c40c802e334518845878ea7
+---
+ plat/imx/imx8mq/imx8mq_bl31_setup.c    | 6 +++---
+ plat/imx/imx8mq/include/platform_def.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/plat/imx/imx8mq/imx8mq_bl31_setup.c b/plat/imx/imx8mq/imx8mq_bl31_setup.c
+index 3612b04c..a0039880 100644
+--- a/plat/imx/imx8mq/imx8mq_bl31_setup.c
++++ b/plat/imx/imx8mq/imx8mq_bl31_setup.c
+@@ -227,7 +227,7 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+ 			board_id == AIY_HYNIX_1G) {
+ 		tee_base_address = (unsigned long)0x7e000000;
+ 	} else {
+-		tee_base_address = (unsigned long)0xfe000000;
++		tee_base_address = (unsigned long)0xbe000000;
+ 	}
+ #endif
+ 
+@@ -331,11 +331,11 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+ 	bl33_image_ep_info.args.arg1 = BL32_BASE;
+ #else
+ 	/* Pass TEE base and size to uboot */
+-	bl33_image_ep_info.args.arg1 = 0xFE000000;
++	bl33_image_ep_info.args.arg1 = 0xBE000000;
+ #endif
+ 	/* TEE size + RDC reserved memory = 0x2000000 + 0x2000000 + 0x30000000 */
+ #ifdef DECRYPTED_BUFFER_START
+-	bl33_image_ep_info.args.arg2 = 0x100000000 - DECRYPTED_BUFFER_START;
++	bl33_image_ep_info.args.arg2 = 0xC0000000 - DECRYPTED_BUFFER_START;
+ #else
+ 	bl33_image_ep_info.args.arg2 = 0x2000000;
+ #endif
+diff --git a/plat/imx/imx8mq/include/platform_def.h b/plat/imx/imx8mq/include/platform_def.h
+index f302ebeb..9b09dfdb 100644
+--- a/plat/imx/imx8mq/include/platform_def.h
++++ b/plat/imx/imx8mq/include/platform_def.h
+@@ -37,7 +37,7 @@
+ #define BL32_LIMIT			0x100000000
+ #define BL32_BASE			tee_base_address
+ #else
+-#define BL32_BASE			0xfe000000
++#define BL32_BASE			0xbe000000
+ #endif
+ 
+ /* non-secure uboot base */
+-- 
+2.25.1
+
