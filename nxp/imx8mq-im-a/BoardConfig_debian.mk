@@ -2,7 +2,7 @@
 # Target product
 export NXP_TARGET_PRODUCT=imx8mq-im-a
 # Target hostname
-export NXP_HOSTNAME=IMX8MP-IM-A
+export NXP_HOSTNAME=imx8p-im-a
 # Target SoC
 export NXP_SOC=imx8mq
 # Target arch

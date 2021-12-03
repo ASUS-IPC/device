@@ -2,7 +2,7 @@
 # Target product
 export NXP_TARGET_PRODUCT=imx8mq-pe100a2g
 # Target hostname
-export NXP_HOSTNAME=PE100A
+export NXP_HOSTNAME=pe100a
 # Target SoC
 export NXP_SOC=imx8mq
 # Target arch

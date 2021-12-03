@@ -104,6 +104,7 @@ if [ ! $VERSION_NUMBER ]; then
 	VERSION_NUMBER="eng_by"_"$USER"_"$(date  +%Y%m%d%H%M_%Z)"
 else
 	VERSION_NUMBER="$VERSION_NUMBER"_"$(date  +%Y%m%d%H%M_%Z)"
+	OFFICIAL=1
 fi
 echo "VERSION_NUMBER: $VERSION_NUMBER"
 echo ""
@@ -134,23 +135,33 @@ echo ""
 
 case $TARGET_PRODUCT in
 1) TARGET_PRODUCT=imx8mq-im-a
+   PRODUCT_NAME=IMX8P-IM-A
    ;;
 2) TARGET_PRODUCT=imx8mq-pe100a
+   PRODUCT_NAME=PE100A
    ;;
 3) TARGET_PRODUCT=imx8mq-pe100a2g
+   PRODUCT_NAME=PE100A-2G
    ;;
 4) TARGET_PRODUCT=imx8mq-pv100a
+   PRODUCT_NAME=PV100A
    ;;
 5) TARGET_PRODUCT=imx8mq-pv100a2g
+   PRODUCT_NAME=PV100A-2G
    ;;
 6) TARGET_PRODUCT=imx8mqevk
+   PRODUCT_NAME=IMX8MQ-EVK
    ;;
 esac
 
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/BoardConfig_debian.mk
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/Partition.mk
 
-IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-${OS:-debian}
+if [ $OFFICIAL ]; then
+	IMAGES=$TOP_DIR/${PRODUCT_NAME}_${OS:-debian}_${VERSION_NUMBER}
+else
+	IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-${OS:-debian}
+fi
 
 case $BUILD in
 1)	# all image
