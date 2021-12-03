@@ -109,8 +109,10 @@ echo "VERSION_NUMBER: $VERSION_NUMBER"
 echo ""
 echo "1. IMX8MP-IM-A"
 echo "2. PE100A"
-echo "3. PV100A"
-echo "4. IMX8MQ_EVK"
+echo "3. PE100A_2G"
+echo "4. PV100A"
+echo "5. PV100A_2G"
+echo "6. IMX8MQ_EVK"
 read -p "Select build product: " TARGET_PRODUCT
 if [ ! $TARGET_PRODUCT ]; then
     TARGET_PRODUCT="1"
@@ -135,9 +137,13 @@ case $TARGET_PRODUCT in
    ;;
 2) TARGET_PRODUCT=imx8mq-pe100a
    ;;
-3) TARGET_PRODUCT=imx8mq-pv100a
+3) TARGET_PRODUCT=imx8mq-pe100a2g
    ;;
-4) TARGET_PRODUCT=imx8mqevk
+4) TARGET_PRODUCT=imx8mq-pv100a
+   ;;
+5) TARGET_PRODUCT=imx8mq-pv100a2g
+   ;;
+6) TARGET_PRODUCT=imx8mqevk
    ;;
 esac
 

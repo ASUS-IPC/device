@@ -15,3 +15,5 @@ export NXP_KERNEL_DEFCONFIG=ima_defconfig
 export NXP_KERNEL_DTS=fsl-imx8mq-ima
 # Build jobs
 export NXP_JOBS=12
+# Board DDR size
+export NXP_DDR_SIZE=4G

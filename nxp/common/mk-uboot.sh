@@ -24,6 +24,13 @@ function build_uboot()
 function build_atf()
 {
 	cd $TOP_DIR/imx-atf
+	rm *.patch
+	cp $TOP_DIR/device/nxp/$NXP_TARGET_PRODUCT/imx-atf/*.patch .
+	git config user.email debian@example.com
+	git config user.name debian
+	git reset --hard 8e44a0722029d11913bbd888d8b3e344a1b9895e
+	git am *.patch
+	sleep 1
 	make PLAT=${NXP_SOC} bl31
 }
 
@@ -38,9 +45,9 @@ function build_bootloader()
 	cp $COMMON_DIR/${NXP_SOC}/firmware-imx-*/firmware/ddr/synopsys/lpddr4_pmu_train_* iMX8M/
 	cp $COMMON_DIR/${NXP_SOC}/firmware-imx-*/firmware/hdmi/cadence/signed_hdmi_imx8m.bin iMX8M/
 	if [ "${NXP_SOC}" == "imx8mq" ]; then
-		make SOC=iMX8M DTB=${NXP_KERNEL_DTS}.dtb flash_evk
+		make SOC=iMX8M DTB=${NXP_KERNEL_DTS}.dtb DDR_SIZE=${NXP_DDR_SIZE} flash_evk
 	elif [ "${NXP_SOC}" == "imx8mm" ]; then
-		make SOC=iMX8MM DTB=${NXP_KERNEL_DTS}.dtb  flash_evk
+		make SOC=iMX8MM DTB=${NXP_KERNEL_DTS}.dtb DDR_SIZE=${NXP_DDR_SIZE} flash_evk
 	fi
 	cp iMX8M/flash.bin $IMAGES
 }
