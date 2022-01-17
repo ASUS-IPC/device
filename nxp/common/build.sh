@@ -14,6 +14,12 @@ function build_kernel(){
 	IMAGES=$IMAGES ./mk-kernel.sh
 }
 
+function build_kernel_header(){
+	cd $COMMON_DIR
+	IMAGES=$IMAGES ./mk-kernel-header.sh
+}
+
+
 function build_debian(){
 	ROOTFS_IMG=$TOP_DIR/$IMAGES/rootfs.img
 	rm -f $ROOTFS_IMG
@@ -125,7 +131,8 @@ echo "2. U-boot Image"
 echo "3. Kernel Image"
 echo "4. Rootfs Image"
 echo "5. RAW Image"
-echo "6. Cleanall"
+echo "6. kernel header"
+echo "7. Cleanall"
 read -p "Select build type: " BUILD
 if [ ! $BUILD ]; then
     BUILD="1"
@@ -179,7 +186,10 @@ case $BUILD in
 5)	# raw
 	build_image
 	;;
-6)	# cleanall
+6)	# Kernel header
+	build_kernel_header
+	;;
+7)	# cleanall
 	build_cleanall
 	;;
 *)	echo "Wrong parameter"
