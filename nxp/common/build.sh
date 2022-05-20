@@ -165,7 +165,7 @@ source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/BoardConfig_debian.mk
 source $TOP_DIR/device/nxp/${TARGET_PRODUCT}/Partition.mk
 
 if [ $OFFICIAL ]; then
-	IMAGES=$TOP_DIR/${PRODUCT_NAME}_${OS:-debian}_${VERSION_NUMBER}
+	IMAGES=$TOP_DIR/${PRODUCT_NAME}_${OS:-debian}_${VERSION_NUMBER}_${VERSION}
 else
 	IMAGES=$TOP_DIR/Image-${NXP_TARGET_PRODUCT}-${OS:-debian}
 fi
