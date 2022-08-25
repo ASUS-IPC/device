@@ -101,6 +101,13 @@ function build_cleanall(){
 #=========================
 # build targets
 #=========================
+if [ $OS == "ubuntu" ]; then
+    OS="ubuntu"
+else
+    OS="debian"
+fi
+echo "OS: $OS"
+
 if [ ! $VERSION ]; then
     VERSION="debug"
 fi
