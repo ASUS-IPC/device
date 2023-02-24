@@ -26,10 +26,15 @@ function build_debian(){
 
 	cd $TOP_DIR/debian
         ROOTFS_BASE_DIR=../rootfs-base
-	if [ ! -e debian-*.tar.gz ]; then
+
+        if [ ! -e $ROOTFS_BASE_DIR ]; then
+               ROOTFS_BASE_DIR="."
+        fi
+
+	if [ ! -e debian-buster-base.tar.gz ]; then
 		echo -e "\033[36m Run mk-base-debian.sh first \033[0m"
 		RELEASE=buster ARCH=$NXP_ARCH ./mk-base-debian.sh
-                ln -rsf $ROOTFS_BASE_DIR/debian-buster-*.tar.gz   debian-buster-base.tar.gz
+                ln -rsf $ROOTFS_BASE_DIR/debian-buster-arm64-*.tar.gz   debian-buster-base.tar.gz
 	fi
 
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ./mk-rootfs-buster.sh
