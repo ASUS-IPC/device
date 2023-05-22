@@ -108,7 +108,7 @@ function build_cleanall(){
 #=========================
 # build targets
 #=========================
-if [ $OS == "ubuntu" ]; then
+if [ "$OS" == "ubuntu" ]; then
     OS="ubuntu"
 else
     OS="debian"
@@ -119,6 +119,12 @@ if [ ! $VERSION ]; then
     VERSION="debug"
 fi
 echo "VERSION: $VERSION"
+
+rm -rf $TOP_DIR/debian/overlay-debug
+
+if [ "$VERSION" != "RELEASE" ]; then
+    cp -apfr $TOP_DIR/asus/overlay-debug $TOP_DIR/debian/
+fi
 
 if [ ! $VERSION_NUMBER ]; then
 	VERSION_NUMBER="eng_by"_"$USER"_"$(date  +%Y%m%d%H%M_%Z)"
